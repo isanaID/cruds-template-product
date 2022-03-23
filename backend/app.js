@@ -3,6 +3,7 @@ const app = express();
 const router = require('./routes/');
 const log = require('./middlewares/logger');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const port = 5000;
 
 mongoose.connect('mongodb://localhost:27017/eduwork', {
@@ -12,7 +13,7 @@ mongoose.connect('mongodb://localhost:27017/eduwork', {
 const db = mongoose.connection;
 db.on('error', (error)=> console.error(error));
 db.once('open', ()=> console.log('Connected to MongoDB'));
-
+app.use(cors());
 app.use(log);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

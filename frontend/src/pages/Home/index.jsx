@@ -1,10 +1,28 @@
 import { Link } from 'react-router-dom';
 import './index.scss';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Home = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const getProducts = async () => {
+    const response = await axios.get('http://localhost:5000/product');
+    setProducts(response.data);
+  };
+
+  const deleteProduct = async (id) => {
+    await axios.delete(`http://localhost:5000/product/${id}`);
+    getProducts();
+  };
+
   return(
     <div className="main">
-      <Link to="/tambah" className="btn btn-primary">Tamah Produk</Link>
+      <Link to="/tambah" className="btn btn-primary">Tambah Produk</Link>
       <div className="search">
         <input type="text" placeholder="Masukan kata kunci..."/>
       </div>
@@ -18,26 +36,18 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Laptop</td>
-            <td className="text-right">RP. 20.000.000</td>
-            <td className="text-center">
-              <Link to="/detail" className="btn btn-sm btn-info">Detail</Link>
-              <Link to="/edit" className="btn btn-sm btn-warning">Edit</Link>
-              <Link to="#" className="btn btn-sm btn-danger">Delete</Link>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Monitor</td>
-            <td className="text-right">RP. 10.000.000</td>
-            <td className="text-center">
-              <Link to="/detail" className="btn btn-sm btn-info">Detail</Link>
-              <Link to="/edit" className="btn btn-sm btn-warning">Edit</Link>
-              <Link to="#" className="btn btn-sm btn-danger">Delete</Link>
-            </td>
-          </tr>
+            { products.map((product, index) => (
+                        <tr key={ product.id }>
+                        <td>{ index+ 1}</td>
+                        <td>{ product.name }</td>
+                        <td className="text-right">Rp.{ product.price }</td>
+                        <td className="text-center">
+                          <Link to={`/detail/${product._id}`} className="btn btn-sm btn-info">Detail</Link>
+                          <Link to={`/edit/${product._id}`} className="btn btn-sm btn-warning">Edit</Link>
+                          <button onClick={ () => deleteProduct(product._id) } className="btn btn-sm btn-danger">Delete</button>
+                        </td>
+                      </tr>
+            ))}
         </tbody>
       </table>
     </div>
