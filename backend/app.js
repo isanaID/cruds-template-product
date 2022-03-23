@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const router = require('./routes/');
 const log = require('./middlewares/logger');
 const mongoose = require('mongoose');
@@ -14,7 +13,6 @@ const db = mongoose.connection;
 db.on('error', (error)=> console.error(error));
 db.once('open', ()=> console.log('Connected to MongoDB'));
 
-app.use(bodyParser.json());
 app.use(log);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
