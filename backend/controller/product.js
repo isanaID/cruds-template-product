@@ -1,39 +1,37 @@
-const model = require('../config/model');
+const model = require('../config/model/index');
 const controller = {};
 
 controller.getAll = async (req, res) => {
     try {
         const products = await model.product.find({});
-        res.json(products);
+        res.send(products);
     } catch (err) {
-        res.json({message: err});
+        res.send({message: err});
     }
 }
 
 controller.getOne = async (req, res) => {
     try {
         const product = await model.product.findById(req.params.id);
-        res.json(product);
+        res.send(product);
     } catch(err) {
-        res.json({message: err});
+        res.send({message: err});
     }
 }
 
 controller.post = async (req, res) => {
-    const product = new model.product({
-        name: req.body.name,
-        price: req.body.price,
-        stock: req.body.stock,
-        status: req.body.status,
-        image: `public/${req.file.filename}`,
-    });
-    product.save()
-        .then(data => {
-            res.json(data);
-        })
-        .catch(err => {
-            res.json({message: err});
+    try {
+        const product = new model.product({
+            name: req.body.name,
+            price: req.body.price,
+            stock: req.body.stock,
+            status: req.body.status
         });
+        const result = await product.save();
+        res.send(result);
+    } catch(err) {
+        res.send({message: err});
+    }
 }
 
 controller.update = (req, res) => {
@@ -42,23 +40,23 @@ controller.update = (req, res) => {
         price: req.body.price,
         stock: req.body.stock,
         status: req.body.status,
-        image: `public/${req.file.filename}`,
+        //image: `public/${req.file.filename}`,
     })
         .then(data => {
-            res.json(data);
+            res.send(data);
         })
         .catch(err => {
-            res.json({message: err});
+            res.send({message: err});
         });
 }
 
 controller.delete = (req, res) => {
     model.product.findByIdAndRemove(req.params.id)
         .then(data => {
-            res.json(data);
+            res.send(data);
         })
         .catch(err => {
-            res.json({message: err});
+            res.send({message: err});
         });
 }
 
