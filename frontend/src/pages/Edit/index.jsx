@@ -18,7 +18,7 @@ const Tambah = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.put(`http://localhost:5000/product/${id}`, {
+    await axios.put(`http://localhost:5000/api/v2/product/${id}`, {
       name: name,
       price: price,
       stock: stock,
@@ -28,7 +28,7 @@ const Tambah = () => {
   };
 
   const getProductById = async () => {
-    const response = await axios.get(`http://localhost:5000/product/${id}`);
+    const response = await axios.get(`http://localhost:5000/api/v2/product/${id}`);
     setName(response.data.name);
     setPrice(response.data.price);
     setStock(response.data.stock);

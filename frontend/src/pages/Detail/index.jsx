@@ -13,7 +13,7 @@ const Detail = () => {
   }, []);
 
   const getProductById = async () => {
-    const response = await axios.get(`http://localhost:5000/product/${id}`);
+    const response = await axios.get(`http://localhost:5000/api/v2/product/${id}`);
     setProduct(response.data);
   };
 

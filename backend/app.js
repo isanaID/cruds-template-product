@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
-const router = require('./routes/');
+// const router = require('./routes/');
 const log = require('./middlewares/logger');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const productRouterV1 = require('./routes/apiv1');
+const productRouterV2 = require('./routes/index');
 const port = 5000;
 
 mongoose.connect('mongodb://localhost:27017/eduwork', {
@@ -18,7 +20,10 @@ app.use(log);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //app.use('/public', express.static(path.join(__dirname, 'uploads')));
-app.use(router);
+// app.use(router);
+// app.use(router2);
+app.use('/api/v1', productRouterV1);
+app.use('/api/v2', productRouterV2);
 app.use((req, res, next) => {
     res.status(404).send('<h1>Page not found</h1>');
 });

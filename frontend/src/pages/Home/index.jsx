@@ -11,12 +11,12 @@ const Home = () => {
   }, []);
 
   const getProducts = async () => {
-    const response = await axios.get('http://localhost:5000/product');
+    const response = await axios.get('http://localhost:5000/api/v2/product');
     setProducts(response.data);
   };
 
   const deleteProduct = async (id) => {
-    await axios.delete(`http://localhost:5000/product/${id}`);
+    await axios.delete(`http://localhost:5000/api/v2/product/${id}`);
     getProducts();
   };
 
@@ -31,7 +31,7 @@ const Home = () => {
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th className="text-right">Price</th>
+            <th className="text-left">Price</th>
             <th className="text-center">Action</th>
           </tr>
         </thead>
@@ -40,7 +40,7 @@ const Home = () => {
                         <tr key={ product.id }>
                         <td>{ index+ 1}</td>
                         <td>{ product.name }</td>
-                        <td className="text-right">Rp.{ product.price }</td>
+                        <td className="text-left">Rp.{ product.price }</td>
                         <td className="text-center">
                           <Link to={`/detail/${product._id}`} className="btn btn-sm btn-info">Detail</Link>
                           <Link to={`/edit/${product._id}`} className="btn btn-sm btn-warning">Edit</Link>

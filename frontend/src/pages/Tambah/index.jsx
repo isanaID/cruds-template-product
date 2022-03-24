@@ -17,7 +17,7 @@ const Tambah = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:5000/product', {
+    await axios.post('http://localhost:5000/api/v2/product', {
       name: name,
       price: price,
       stock: stock,
