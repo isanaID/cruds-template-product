@@ -8,7 +8,7 @@ import Tambah from './pages/Tambah';
 const App = () => {
   return (
     <div>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <Navigation />
         <Switch>
           <Route path="/" exact children={() => <Home />} />
